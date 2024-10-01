@@ -5,6 +5,8 @@
   const text = ref('');
   const amount = ref('');
 
+  const emit = defineEmits(['transactionSubmitted']);
+
   // Get toast interface
   const toast = useToast();
 
@@ -15,8 +17,13 @@
       return;
     }
 
-    // Proceed with form submission logic here...
-    console.log('Form submitted:', text.value, amount.value);
+    // Emit a custom event with the transaction data
+    const transactionData = {
+      text: text.value,
+      amount: parseFloat(amount.value),
+    };
+
+    emit('transactionSubmitted', transactionData);
 
     // Clear form fields
     text.value = '';
